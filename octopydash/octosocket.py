@@ -19,8 +19,9 @@ import logging
 import websockets
 import random
 import string
+import datetime
 import threading
-import queue
+import queue    
 
 class OctoSocket:
     def __init__(self, baseurl):
@@ -32,9 +33,11 @@ class OctoSocket:
         self._callbacks = {}
         self._should_close = False
         self._msg_queue = queue.Queue()
+        self._last_hb = None
 
     async def _connect(self):
         async for websocket in websockets.connect(self._url):
+            self._last_hb = None
             try:
                 while not self._should_close:
                     if not self._msg_queue.empty():
@@ -49,12 +52,22 @@ class OctoSocket:
                                     if msgtype in self._callbacks:
                                         for cb in self._callbacks[msgtype]:
                                             cb(m[msgtype])
-                    except asyncio.TimeoutError: pass
+                        elif message[0] == 'h':
+                            self._log.info("socket heartbeat <3")
+                            self._last_hb = datetime.datetime.now()
+                    except asyncio.TimeoutError:
+                        if self._last_hb is not None:
+                            d = datetime.datetime.now() - self._last_hb
+                            if d.total_seconds() > 60:
+                                self._log.warning('watchdog triggered, reconnecting...')
+                                await websocket.close()
                 self._log.info("waiting for socket to close...")
                 await websocket.close()
                 self._log.info("socket closed.")
                 return
             except websockets.ConnectionClosedError as ex:
+                continue
+            except websockets.ConnectionClosedOK as ex:
                 continue
 
     def close(self):
