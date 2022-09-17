@@ -15,8 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import threading
-from octopydash.widgets.lcars.button import ButtonBase
-from octopydash.widgets.lcars.confirmaction import ConfirmAction
+from octopydash.widgets.button import ButtonBase
+from octopydash.widgets.confirmaction import ConfirmAction
 
 class PSUControlPower(ButtonBase):
     def __init__(self, parent, printer, height=40, x_inset=2, y_inset=0, font_scale=0.5):

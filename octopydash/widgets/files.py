@@ -21,9 +21,9 @@ from io import BytesIO
 import tkinter as tk
 from tkinter.font import Font
 
-from octopydash.widgets.lcars.frame import Frame
-from octopydash.widgets.lcars import ButtonBase
-from octopydash.widgets.lcars.confirmaction import ConfirmAction
+from octopydash.widgets.frame import Frame
+from octopydash.widgets.button import ButtonBase
+from octopydash.widgets.confirmaction import ConfirmAction
 
 class FileItem(tk.Frame):
     """A single file item shown in a FileList"""

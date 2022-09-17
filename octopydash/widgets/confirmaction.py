@@ -17,8 +17,8 @@ import tkinter as tk
 from tkinter.font import Font
 import logging
 
-from octopydash.widgets.lcars.frame import Frame
-from octopydash.widgets.lcars.button import ButtonBase
+from octopydash.widgets.frame import Frame
+from octopydash.widgets.button import ButtonBase
 
 class ConfirmAction(tk.Toplevel):
     def __init__(self, parent, title, message, color='#7788ff', frame_loc='right'):

@@ -18,10 +18,10 @@ import logging
 
 from octopydash.printer import Printer
 
-from octopydash.widgets.lcars import printer_status
-from octopydash.widgets.lcars import frame
-from octopydash.widgets.lcars.power import PSUControlPower
-from octopydash.widgets.lcars.current_job import CurrentJob
+from octopydash.widgets import printer_status
+from octopydash.widgets import frame
+from octopydash.widgets.power import PSUControlPower
+from octopydash.widgets.current_job import CurrentJob
 
 class MainWin(tk.Tk):
     def __init__(self):

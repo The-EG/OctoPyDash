@@ -22,9 +22,9 @@ from io import BytesIO
 
 import requests
 
-from octopydash.widgets.lcars.button import ButtonBase
-from octopydash.widgets.lcars.files import FileList
-from octopydash.widgets.lcars.confirmaction import ConfirmAction
+from octopydash.widgets.button import ButtonBase
+from octopydash.widgets.files import FileList
+from octopydash.widgets.confirmaction import ConfirmAction
 
 class CurrentJob(tk.Frame):
     def __init__(self, parent, printer, width, height, bar_loc='left', color='#ffcc66'):

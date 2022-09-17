@@ -13,6 +13,3 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from octopydash.widgets.lcars.button import ButtonBase
-from octopydash.widgets.lcars.power import PSUControlPower
-from octopydash.widgets.lcars.frame import Frame
