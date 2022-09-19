@@ -19,13 +19,44 @@ from octopydash.octoclient import OctoClient
 from octopydash.octosocket import OctoSocket
 
 class Printer:
+    """
+    A representation of a Printer or OctoPrint instance.
+    
+    This is a convenient way to group both OctoPrint HTTP REST and
+    websocket clients together. This class takes care of creating
+    both and authenticating with the socket.
+
+    The owner of this object is still responsible for starting and 
+    stopping the socket connection.
+
+    Attributes
+    ----------
+    name : str
+        the name of this printer
+    client : OctoClient
+        the OctoPrint HTTP client
+    socket : OctoSocket
+        the OctoPrint websocket
+    """
+    
     def __init__(self, name, baseurl, apikey):
+        """
+        A representation of a printer or OctoPrint instance.
+
+        Parameters
+        ----------
+        name : str
+            the name of this printer
+        baseurl : str
+            the URL to the OctoPrint instance
+        apikey : str
+            the API Key to use when connecting to OctoPrint
+        """
         self.name = name
         self._log = logging.getLogger(f'{__name__} - {name}')
         self.client = OctoClient(baseurl, apikey)
         self.socket = OctoSocket(baseurl.replace('http:','ws:'))
         self.socket.add_callback('connected', self.on_connected)
-
 
     def on_connected(self, data):
         self._log.info("Socket connected, logging in...")
