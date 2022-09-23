@@ -13,3 +13,10 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from octopydash.widgets.button import ButtonBase
+from octopydash.widgets.confirmaction import ConfirmAction
+from octopydash.widgets.current_job import CurrentJob
+from octopydash.widgets.files import FileList
+from octopydash.widgets.frame import Frame
+from octopydash.widgets.power import PSUControlPower
+from octopydash.widgets.printer_status import PrinterStatus

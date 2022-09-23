@@ -18,10 +18,7 @@ import logging
 
 from octopydash.printer import Printer
 
-from octopydash.widgets import printer_status
-from octopydash.widgets import frame
-from octopydash.widgets.power import PSUControlPower
-from octopydash.widgets.current_job import CurrentJob
+from octopydash.widgets import PrinterStatus, Frame, PSUControlPower, CurrentJob
 
 class MainWin(tk.Tk):
     def __init__(self):
@@ -38,16 +35,17 @@ class MainWin(tk.Tk):
     def on_map(self, event):
         self._log.info('Creating widgets...')
 
+        # Change these to configure your printers
         self.printer_a = Printer("Printer A Name", "http://printer-a-url", "PRINTERAPIKEY")
         self.printer_b = Printer("Printer B Name", "http://printer-b-url", "PRINTERAPIKEY")
 
         height = self.winfo_height()
         width = self.winfo_width()
 
-        self.printera_frame = frame.Frame(self, (width/2)-2, height, 'right', color='#88ccff')
+        self.printera_frame = Frame(self, (width/2)-2, height, 'right', color='#88ccff')
         self.printera_frame.place(x=0,y=0)
 
-        self.printera_status = printer_status.PrinterStatus(self, self.printer_a, 40, color='#88ccff')
+        self.printera_status = PrinterStatus(self, self.printer_a, 40, color='#88ccff')
         self.printera_status.place(x=20, y=0)
 
         self.printera_buttons = tk.Frame(self, bg='#000000')
@@ -60,10 +58,10 @@ class MainWin(tk.Tk):
         self.printera_job.show_command = lambda: self.printera_job.place(x=10, y=50)
         self.printera_job.hide_command = lambda: self.printera_job.place_forget()
 
-        self.printerb_frame = frame.Frame(self, (width/2)-2, height, 'left', color='#ffcc66')
+        self.printerb_frame = Frame(self, (width/2)-2, height, 'left', color='#ffcc66')
         self.printerb_frame.place(x=(width/2)+2, y=0)
 
-        self.printerb_status = printer_status.PrinterStatus(self, self.printer_b, 40, color='#ffcc66')
+        self.printerb_status = PrinterStatus(self, self.printer_b, 40, color='#ffcc66')
         self.printerb_status.place(x=width-20, y=0, anchor='ne')
 
         self.printerb_power = PSUControlPower(self, self.printer_b, 80)

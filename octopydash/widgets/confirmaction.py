@@ -21,7 +21,33 @@ from octopydash.widgets.frame import Frame
 from octopydash.widgets.button import ButtonBase
 
 class ConfirmAction(tk.Toplevel):
+    """
+    A fullscreen 'dialog' window asking for confirmation of an action.
+
+    This window will generate a custom event based on the user's choice:
+      - Confirm - user clicked Confirm
+      - Cancel  - user clicked Cancel
+    """
+
     def __init__(self, parent, title, message, color='#7788ff', frame_loc='right'):
+        """
+        A fullscreen 'dialog' window asking for confirmation of an action.
+
+        Parameters
+        ----------
+        parent : widget
+            the parent widget/window for this dialog
+        title : str
+            a title to be shown at the top of the frame
+        message : str
+            a message to be shown at the middle of the window. can contain multiple lines
+            of text.
+        color : str
+            the color of the frame. this can be any color that tkinter recognizes, 
+            ie. 'red' or '#ff0000', default '#7788ff'
+        frame_loc : str
+            the location of the frame, either 'left' or 'right'. default 'right'
+        """
         super().__init__(parent)
         self.grab_set()
         self.wm_attributes('-topmost', True)

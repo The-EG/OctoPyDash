@@ -15,10 +15,40 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import logging
 import tkinter as tk
-from tkinter.font import Font
 
 class Frame(tk.Canvas):
+    """A simple LCARS inspired frame"""
+
     def __init__(self, parent, width, height, side_loc='right', top_width=40, side_width=10, bottom_width=80, color='#7788ff'):
+        """
+        A simple LCARS inspired frame.
+
+        The frame is drawn on 3 sides of the given area. Each side is
+        generally a different size, with 1 being the thickest to accomidate
+        buttons (bottom by default), another smaller side that can have 
+        a title or status (top by default), and a smaller 'accent' side
+        (side by default).
+
+        Parameters
+        ----------
+        parent : widget
+            the tkinter widget this frame will be drawn in
+        width : int
+            total width of the frame
+        height : int
+            total height of the frame
+        side_loc : str
+            location of the closed side of the frame, 'left' or 'right'.
+            default 'right'
+        top_width : int
+            thickness of the top portion of the frame. default 40
+        side_width : int
+            thickness of the side portion of the frame. default 10
+        bottom_width : int
+            thickness of the bottom portion of the frame. default 80
+        color : str
+            color of the frame. any color tkinter recognizes. default '#7788ff'
+        """
         super().__init__(parent)
         self._log = logging.getLogger(__name__)
         self['bg'] = '#000000'
@@ -31,26 +61,26 @@ class Frame(tk.Canvas):
         radius = 10
 
         coords = [
-            radius,                   0, # knot
-            radius,                   0, # control
-            width-radius,             0, # control
-            width-radius,             0, # knot
-            width-(radius/2),         0, # control
-            width,           (radius/2), # control
-            width,               radius, # knot
-            width,               radius, # control
-            width,        height-radius, # control
-            width,        height-radius, # knot
-            width,    height-(radius/2), # control
-            width-(radius/2),    height, # control
-            width-radius,        height, # knot
-            width-radius,        height, # control
-            radius,              height, # control
-            radius,              height, # knot
-            radius/2,            height, # control
-            0,        height-(radius/2), # control
-            0,            height-radius, # knot
-            0,            height-radius, # control
+            radius, 0, # knot
+            radius, 0, # control
+            width-radius, 0, # control
+            width-radius, 0, # knot
+            width-(radius/2), 0, # control
+            width, (radius/2), # control
+            width, radius, # knot
+            width, radius, # control
+            width, height-radius, # control
+            width, height-radius, # knot
+            width, height-(radius/2), # control
+            width-(radius/2), height, # control
+            width-radius, height, # knot
+            width-radius, height, # control
+            radius, height, # control
+            radius, height, # knot
+            radius/2, height, # control
+            0, height-(radius/2), # control
+            0, height-radius, # knot
+            0, height-radius, # control
             0, height - bottom_width + radius, # control
             0, height - bottom_width + radius, # knot
             0, height - bottom_width + (radius/2), # control

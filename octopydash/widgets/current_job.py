@@ -27,7 +27,28 @@ from octopydash.widgets.files import FileList
 from octopydash.widgets.confirmaction import ConfirmAction
 
 class CurrentJob(tk.Frame):
+    """Current job information (selected file, thumbnail, print, cancel, pause, files buttons)."""
+
     def __init__(self, parent, printer, width, height, bar_loc='left', color='#ffcc66'):
+        """
+        Current job information.
+
+        Parameters
+        ----------
+        parent : widget
+            the widget this widget will be contained in
+        printer : Printer
+            the OctoPrint printer client and socket
+        width : int
+        
+        height : int
+
+        bar_loc : str
+            the location of the small bar/frame around the thumbnail. either 'left' or 'right'
+            default 'left'
+        color : str
+            the color of the bar. any color that tkinter recognizes. default '#ffcc66'
+        """
         super().__init__(parent)
         self.printer = printer
         self['width'] = width

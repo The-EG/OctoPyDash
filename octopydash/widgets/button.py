@@ -18,7 +18,40 @@ import tkinter as tk
 from tkinter.font import Font
 
 class ButtonBase(tk.Frame):
+    """
+    A basic button, which can also be subclassed.
+
+    A custom ButtonClick event is generated when the button is clicked.
+
+    Methods
+    -------
+    set_color - set the background color of the button
+    
+    """
+    
     def __init__(self, parent, text, height=40, x_inset=2, y_inset=0, font_scale=0.5, color='#ffcc66', width=None):
+        """
+        A basic button.
+
+        Parameters
+        ----------
+        parent : widget
+            the tkinter widget that will contain this button
+        text : str
+            the text to display. this can not be changed after initialization
+        height : int
+            the height of the button, default 40
+        x_inset : int
+            the amount of padding to leave on the right and left sides of the button, default 2
+        y_inset : int
+            the amount of padding to leave on the top and bottom sides of the button, default 0
+        font_scale : float
+            a factor used to choose the font size based on the height of the button, default 0.5
+        color : str
+            any color that tkinter recognizes, ie. 'red' or '#ff0000', default '#ffcc66'
+        width : str
+            the width of the button, or None to automatically size based on `text`
+        """
         super().__init__(parent)
         self._log = logging.getLogger(__name__)
         self.canvas = tk.Canvas(self, bg='#000000', bd=0, highlightthickness=0, relief='flat', height=height)
@@ -37,6 +70,14 @@ class ButtonBase(tk.Frame):
         self.canvas.bind('<ButtonRelease-1>', self.on_click)
 
     def set_color(self, color):
+        """
+        Change the background color of the button.
+
+        Parameters
+        ----------
+        color : str
+            any color that tkinter recognizes, ie. 'red' or '#ff0000'
+        """
         self.canvas.itemconfig(self._rect, fill=color, outline=color)
         
     def on_click(self, event):

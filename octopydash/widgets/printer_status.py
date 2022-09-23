@@ -18,7 +18,24 @@ import tkinter as tk
 from tkinter.font import Font
 
 class PrinterStatus(tk.Canvas):
+    """Current Printer Status Label"""
+    
     def __init__(self, parent, printer, height=62, color='#7788ff'):
+        """
+        Current Printer Status Label
+        
+        Parameters
+        ----------
+        parent : widget
+            the widget this label will be contained in
+        printer : Printer
+            the OctoPrint client and socket
+        height : int
+            the height of the label, default 62
+        color : str
+            the color of the text displayed, any color tkinter recognizes
+            default '#7788ff'
+        """
         super().__init__(parent)
         self.printer = printer
         self._log = logging.getLogger(f'{__name__} - {printer.name}')

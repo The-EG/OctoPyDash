@@ -19,7 +19,27 @@ from octopydash.widgets.button import ButtonBase
 from octopydash.widgets.confirmaction import ConfirmAction
 
 class PSUControlPower(ButtonBase):
+    """A button that indicates the status of and controls a PSU via the PSU Control plugin"""
+
     def __init__(self, parent, printer, height=40, x_inset=2, y_inset=0, font_scale=0.5):
+        """
+        A button that indicates the status of and controls a PSU via the PSU Control plugin
+        
+        Parameters
+        ----------
+        parent : widget
+            the widget that this button will be contained in
+        printer : Printer
+            the OctoPrint client and socket
+        height : int
+            the height of the button, default 40
+        x_inset : int
+            the amount of padding to leave on the right and left sides of the button, default 2
+        y_inset : int
+            the amount of padding to leave on the top and bottom sides of the button, default 0
+        font_scale : float
+            a factor used to choose the font size based on the height of the button, default 0.5
+        """
         super().__init__(parent, 'POWER', height, x_inset, y_inset, font_scale, '#666688')
         self.printer = printer
         self._is_on = False
