@@ -95,8 +95,17 @@ class FileItem(tk.Frame):
 
         if self.file_info['type']=='machinecode' and 'thumbnail' in self.file_info:
             url = self.printer.client.full_url(self.file_info['thumbnail'])
-            t = threading.Thread(target=self._get_thumbnail, args=(url,))
-            t.run()
+            r = requests.request('GET', url)
+            if r.status_code == 200:
+                img = Image.open(BytesIO(r.content))
+                sx = self._height / img.width
+                sy = self._height / img.height
+
+                self._tn_img = ImageTk.PhotoImage(ImageOps.scale(img, min(sx, sy)))
+                self.canvas.create_image(25, self._height/2, image=self._tn_img, anchor='w')
+            else:
+                self._log.warning("Couldn't get thumbnail: %s, %s", url, r.status_code)
+                # set generic icon
         else:
             pass #set generic icon
 
@@ -114,19 +123,6 @@ class FileItem(tk.Frame):
             self.del_btn = ButtonBase(self.button_frame, "DEL", self._height, 0, 0, color=self.color)
             self.del_btn.pack(side='left', padx=(1,2))
             self.del_btn.bind("<<ButtonClick>>", self.on_delete)
-
-    def _get_thumbnail(self, url):
-        r = requests.request('GET', url)
-        if r.status_code == 200:
-            img = Image.open(BytesIO(r.content))
-            sx = self._height / img.width
-            sy = self._height / img.height
-
-            self._tn_img = ImageTk.PhotoImage(ImageOps.scale(img, min(sx, sy)))
-            self.canvas.create_image(25, self._height/2, image=self._tn_img, anchor='w')
-        else:
-            self._log.warning("Couldn't get thumbnail: %s, %s", url, r.status_code)
-            # set generic icon
         
     def on_open(self, event):
         self.event_generate("<<FolderOpened>>")
@@ -234,6 +230,7 @@ class FileList(tk.Toplevel):
         t.run()
 
     def update_list(self):
+        self._log.debug("Starting update_list thread")
         for child in self._file_items:
             child.pack_forget()
         
@@ -263,6 +260,8 @@ class FileList(tk.Toplevel):
             self.down_btn.place(x=self.winfo_width(),y=self.winfo_height()-120, anchor='ne')
         else:
             self.down_btn.place_forget()
+
+        self._log.debug("End update_list thread")
 
     def on_back(self, event):
         parts = self._path.split('/')
